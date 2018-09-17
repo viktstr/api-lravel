@@ -6,7 +6,7 @@
 ```
 php artisan migrate
 ```
-* Для запуска задач добавить в crontab добавить:
+* Для запуска задач в crontab добавить:
 ```
 * * * * * php /path/to/artisan schedule:run >>/dev/null 2>&1
 ```
