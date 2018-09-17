@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Console\Commands\GetData;
+use App\Console\Commands\GetStructure;
+use App\Entity\Source;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +27,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $sourceList = Source::all();
+
+        /** @var Source $source */
+        foreach ($sourceList as $source) {
+            $schedule->command(GetData::class, ['resource' => $source->name])
+                ->everyMinute();
+
+            $schedule->command(GetStructure::class, ['resource' => $source->name])
+                ->everyMinute();
+        }
     }
 
     /**
